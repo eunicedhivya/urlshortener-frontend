@@ -1,6 +1,7 @@
 // import } from "react";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../context/AuthContextProvider";
+import Cookies from "js-cookie";
 
 function Profile() {
   const { loggedIn } = useContext(AuthContext);
@@ -10,21 +11,41 @@ function Profile() {
   const [emailId, setEmailId] = useState("");
 
   async function getMeInfo() {
-    const url = "https://urlshortener-clone.herokuapp.com/users/me";
-    // const url = "http://localhost:4000/users/me";
+    console.log("token", Cookies.get("token"));
+    // const url = "https://urlshortener-clone.herokuapp.com/users/me";
+    const url = "http://localhost:4000/users/me";
     // const loggedInRes = await fetch(url, { method: "GET" });
     // console.log(loggedInRes.body);
     // setLoggedIn(loggedInRes.data);
-    fetch(url, { method: "GET", credentials: "include" })
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
+      },
+      body: JSON.stringify({ token: Cookies.get("token") }),
+    })
       .then((data) => data.json())
       .then((data) => {
-        console.log("data", data);
+        console.log("Success:", data);
         setFirstName(data.fname);
         setLastName(data.lname);
         setEmailId(data.email);
-
-        // setLoggedIn(data);
+        // history.push("/");
       });
+
+    // fetch(url, { method: "GET", credentials: "include" })
+    //   .then((data) => data.json())
+    //   .then((data) => {
+    //     console.log("data", data);
+    //     setFirstName(data.fname);
+    //     setLastName(data.lname);
+    //     setEmailId(data.email);
+
+    //     // setLoggedIn(data);
+    //   });
     // .then(() => history.push("/mentors"));
   }
 

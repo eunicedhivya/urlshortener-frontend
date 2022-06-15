@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import Cookies from "js-cookie";
 const AuthContext = createContext();
 function AuthContextProvider(props) {
   // set default to undefined
@@ -7,12 +8,26 @@ function AuthContextProvider(props) {
   async function getLoggedIn() {
     const url = "http://localhost:4000/users/loggedIn";
 
-    fetch(url, { method: "GET", credentials: "include" })
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
+      },
+      body: JSON.stringify({ token: Cookies.get("token") }),
+    })
       .then((data) => data.json())
       .then((data) => {
-        console.log("data", data);
-        setLoggedIn(data);
+        console.log("Success:", data);
       });
+
+    // fetch(url, { method: "GET", credentials: "include" })
+    //   .then((data) => data.json())
+    //   .then((data) => {
+    //     console.log("data", data);
+    //     setLoggedIn(data);
+    //   });
     // .then(() => history.push("/mentors"));
   }
 
