@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 function Login() {
   const history = useHistory();
 
-  const { setLoggedIn } = useContext(AuthContext);
+  const { loggedIn, setLoggedIn } = useContext(AuthContext);
 
   const [msg, setMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -48,12 +48,20 @@ function Login() {
           setErrorMsg(data.message);
           setMsg("");
         } else if (data.msgType === "success") {
-          setErrorMsg("");
-          setMsg(data.message);
-          // console.log(request.headers);
-          setLoggedIn(true);
-          Cookies.set("token", data.token);
-          history.push("/dashboard");
+          console.log(data);
+          if (data.message === "Login Successful") {
+            setErrorMsg("");
+            setMsg(data.message);
+            setLoggedIn(true);
+            Cookies.set("token", data.token);
+            history.push("/dashboard");
+          }
+          // setErrorMsg("");
+          // setMsg(data.message);
+          // // console.log(request.headers);
+          // setLoggedIn(true);
+          // Cookies.set("token", data.token);
+          // history.push("/dashboard");
         }
         // if (data.message === "Account not activated yet") {
         //   setMsg(data.message);

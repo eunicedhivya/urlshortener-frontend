@@ -5,7 +5,7 @@ import LogOut from "./LogOut";
 
 function NavBar() {
   const { loggedIn } = useContext(AuthContext);
-  // console.log("loggedIn", loggedIn);
+  console.log("loggedIn", loggedIn);
 
   return (
     <nav className="d-inline-flex mt-2 mt-md-0 ms-md-auto">
