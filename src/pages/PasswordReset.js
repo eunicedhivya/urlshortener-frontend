@@ -27,7 +27,7 @@ function ForgotPassword() {
     // tmpArr.push(newStudent);
     console.log(newPassword);
 
-    // const url = "https://urlshortener-clone.herokuapp.com/users/login";
+    // const url = `https://urlshortener-clone.herokuapp.com/password-reset/${userId}/${token}`;
     const url = `http://localhost:4000/password-reset/${userId}/${token}`;
     console.log(url);
     fetch(url, {
@@ -43,6 +43,13 @@ function ForgotPassword() {
       .then((data) => data.json())
       .then((data) => {
         console.log("Success:", data);
+        if (data.msgType === "error") {
+          setErrorMsg(data.message);
+          setMsg("");
+        } else if (data.msgType === "success") {
+          setErrorMsg("");
+          setMsg(data.message);
+        }
       });
   };
 
@@ -54,7 +61,7 @@ function ForgotPassword() {
             <h2>Password Reset</h2>
             <form>
               <div className="form-group mb-3">
-                <label>Email</label>
+                <label>Enter New Password</label>
                 <input
                   type="text"
                   className="form-control"
@@ -73,7 +80,8 @@ function ForgotPassword() {
                 Submit
               </button>
             </form>
-            {msg ? <p>{msg}</p> : ""}
+            {msg ? <p className="alert alert-success">{msg}</p> : ""}
+            {errorMsg ? <p className="alert alert-error">{errorMsg}</p> : ""}
           </div>
         </div>
       </div>

@@ -9,14 +9,16 @@ function Profile() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [emailId, setEmailId] = useState("");
+  const [linklist, setlinklist] = useState([]);
+
+  useEffect(() => {
+    getMeInfo();
+    return () => {};
+  }, []);
 
   async function getMeInfo() {
-    console.log("token", Cookies.get("token"));
     // const url = "https://urlshortener-clone.herokuapp.com/users/me";
     const url = "http://localhost:4000/users/me";
-    // const loggedInRes = await fetch(url, { method: "GET" });
-    // console.log(loggedInRes.body);
-    // setLoggedIn(loggedInRes.data);
 
     fetch(url, {
       method: "POST",
@@ -36,24 +38,31 @@ function Profile() {
         // history.push("/");
       });
 
-    // fetch(url, { method: "GET", credentials: "include" })
-    //   .then((data) => data.json())
-    //   .then((data) => {
-    //     console.log("data", data);
-    //     setFirstName(data.fname);
-    //     setLastName(data.lname);
-    //     setEmailId(data.email);
-
-    //     // setLoggedIn(data);
-    //   });
-    // .then(() => history.push("/mentors"));
+    const url2 = "https://urlshortener-clone.herokuapp.com/users/links";
+    // const url = "http://localhost:4000/users/links";
+    fetch(url2, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
+      },
+      body: JSON.stringify({ token: Cookies.get("token") }),
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        console.log("data", data);
+        setlinklist(data);
+      });
   }
 
-  useEffect(() => {
-    getMeInfo();
-    return () => {};
-  }, []);
-
+  // for (let i = 0; i < linklist.length; i++) {
+  //   /* console.log(linklist[i].timestamp) */ linklist[i].timestamp = dateFormat(
+  //     linklist[i].timestamp
+  //   )
+  //     .split(" ")[0]
+  //     .split(",")[0];
+  // }
   return (
     // <div>
     //   <h2>Profile Page</h2>
@@ -71,20 +80,20 @@ function Profile() {
             <ul className="list-group mb-3 text-left">
               <li className="list-group-item d-flex justify-content-between lh-sm">
                 <div>
-                  <h6 className="my-0">{firstName}</h6>
                   <small className="text-muted">First Name</small>
+                  <h6 className="my-0">{firstName}</h6>
                 </div>
               </li>
               <li className="list-group-item d-flex justify-content-between lh-sm">
                 <div>
-                  <h6 className="my-0">{lastName}</h6>
                   <small className="text-muted">Last Name</small>
+                  <h6 className="my-0">{lastName}</h6>
                 </div>
               </li>
               <li className="list-group-item d-flex justify-content-between lh-sm">
                 <div>
-                  <h6 className="my-0">{emailId}</h6>
                   <small className="text-muted">Email ID</small>
+                  <h6 className="my-0">{emailId}</h6>
                 </div>
               </li>
             </ul>

@@ -6,6 +6,9 @@ import React from "react";
 function Signup() {
   const history = useHistory();
 
+  const [msg, setMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+
   const [newUser, setNewUser] = useState({
     fname: "",
     lname: "",
@@ -14,6 +17,15 @@ function Signup() {
   });
 
   const { fname, lname, email, password } = newUser;
+
+  function isValidEmail(val) {
+    let regEmail =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!regEmail.test(val)) {
+      return false;
+    }
+    return true;
+  }
 
   const onInputChange = (e) => {
     // console.log("newMentor", newMentor);
@@ -26,8 +38,13 @@ function Signup() {
     // tmpArr.push(newStudent);
     console.log(newUser);
 
-    const url = "https://urlshortener-clone.herokuapp.com/users/signup";
-    // const url = "http://localhost:4000/users/signup";
+    if (!isValidEmail(newUser.email)) {
+      errorMsg("Add correct email id");
+      return;
+    }
+
+    // const url = "https://urlshortener-clone.herokuapp.com/users/signup";
+    const url = "http://localhost:4000/users/signup";
     fetch(url, {
       method: "POST",
       headers: {
@@ -39,8 +56,15 @@ function Signup() {
     })
       .then((data) => data.json())
       .then((data) => {
-        console.log("Success:", data);
-        history.push("/");
+        // console.log("Success:", data);
+        if (data.msgType === "error") {
+          setErrorMsg(data.message);
+          setMsg("");
+        } else if (data.msgType === "success") {
+          setErrorMsg("");
+          setMsg(data.message);
+          history.push("/");
+        }
       });
   };
 
@@ -48,7 +72,7 @@ function Signup() {
     <div className="container ">
       <div className="col-md-6 offset-md-3">
         <div className="row justify-content-center">
-          <div className="card p-4 mt-5 bg-light">
+          <div className="card p-4 mt-2">
             <h2>Signup</h2>
             <form>
               <div className="form-group mb-3">
@@ -98,12 +122,14 @@ function Signup() {
 
               <button
                 type="submit"
-                className="btn btn-primary"
+                className="btn btn-primary mb-3"
                 onClick={(e) => onSubmit(e)}
               >
                 Submit
               </button>
             </form>
+            {msg ? <p className="alert alert-success">{msg}</p> : ""}
+            {errorMsg ? <p className="alert alert-danger">{errorMsg}</p> : ""}
           </div>
         </div>
       </div>

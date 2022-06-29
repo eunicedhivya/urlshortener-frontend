@@ -24,7 +24,7 @@ function ForgotPassword() {
     // tmpArr.push(newStudent);
     console.log(newUser);
 
-    // const url = "https://urlshortener-clone.herokuapp.com/users/login";
+    // const url = "https://urlshortener-clone.herokuapp.com/password-reset/";
     const url = "http://localhost:4000/password-reset/";
     fetch(url, {
       method: "POST",
@@ -40,12 +40,20 @@ function ForgotPassword() {
       .then((data) => {
         console.log("Success:", data);
 
-        if (data.message === "Invalid URL") {
+        if (data.msgType === "error") {
           setErrorMsg(data.message);
           setMsg("");
-        } else if (data.message === "Valid URL") {
-          history.push("/password-reset");
+        } else if (data.msgType === "success") {
+          setErrorMsg("");
+          setMsg(data.message);
         }
+
+        // if (data.message === "Invalid URL") {
+        //   setErrorMsg(data.message);
+        //   setMsg("");
+        // } else if (data.message === "Valid URL") {
+        //   history.push("/password-reset");
+        // }
 
         // if (data.message === "Account not activated yet") {
         //   setMsg(data.message);
@@ -66,7 +74,7 @@ function ForgotPassword() {
             <h2>Forgot Password</h2>
             <form>
               <div className="form-group mb-3">
-                <label>Email</label>
+                <label>Enter your Email</label>
                 <input
                   type="text"
                   className="form-control"
@@ -84,10 +92,9 @@ function ForgotPassword() {
               >
                 Submit
               </button>
-
-              <Link to="/forgot-password">forgot password</Link>
             </form>
-            {msg ? <p>{msg}</p> : ""}
+            {msg ? <p className="alert alert-success">{msg}</p> : ""}
+            {errorMsg ? <p className="alert alert-danger">{errorMsg}</p> : ""}
           </div>
         </div>
       </div>
