@@ -2,6 +2,7 @@
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../context/AuthContextProvider";
 import Cookies from "js-cookie";
+import BarChart from "../components/BarChart";
 
 function Profile() {
   const { loggedIn } = useContext(AuthContext);
@@ -9,7 +10,7 @@ function Profile() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [emailId, setEmailId] = useState("");
-  const [linklist, setlinklist] = useState([]);
+  const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
     getMeInfo();
@@ -38,8 +39,8 @@ function Profile() {
         // history.push("/");
       });
 
-    const url2 = "https://urlshortener-clone.herokuapp.com/users/links";
-    // const url = "http://localhost:4000/users/links";
+    // const url2 = "https://urlshortener-clone.herokuapp.com/users/datapoints";
+    const url2 = "http://localhost:4000/users/datapoints";
     fetch(url2, {
       method: "POST",
       headers: {
@@ -52,17 +53,19 @@ function Profile() {
       .then((data) => data.json())
       .then((data) => {
         console.log("data", data);
-        setlinklist(data);
+        setChartData(data);
       });
   }
 
-  // for (let i = 0; i < linklist.length; i++) {
-  //   /* console.log(linklist[i].timestamp) */ linklist[i].timestamp = dateFormat(
-  //     linklist[i].timestamp
-  //   )
-  //     .split(" ")[0]
-  //     .split(",")[0];
-  // }
+  const dataLabels = chartData.map(function (itm) {
+    return itm._id;
+  });
+  const dataPoints = chartData.map(function (itm) {
+    return itm.count;
+  });
+
+  // console.log("dataLabels", dataLabels);
+  // console.log("dataPoints", dataPoints);
   return (
     // <div>
     //   <h2>Profile Page</h2>
@@ -101,9 +104,17 @@ function Profile() {
           <div className="col-md-7 col-lg-8">
             <h4 className="mb-3">Billing address</h4>
             <div className="row">
-              <div className="col-md-4">Test</div>
-              <div className="col-md-4">Test</div>
-              <div className="col-md-4">Test</div>
+              <div className="col">
+                {chartData.length === 0 ? (
+                  <div>
+                    0 shortlinks.
+                    <br />
+                    <a href="/create">Click here</a> to create a shortlink
+                  </div>
+                ) : (
+                  <BarChart datapoints={dataPoints} datalabel={dataLabels} />
+                )}
+              </div>
             </div>
           </div>
         </div>

@@ -13,6 +13,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import PasswordReset from "./pages/PasswordReset";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AccActivated from "./pages/AccActivated";
 
 function App() {
   const { loggedIn } = useContext(AuthContext);
@@ -36,6 +37,9 @@ function App() {
         </Route>
         <Route path="/create">
           <Create />
+        </Route>
+        <Route path="/account-activated">
+          <AccActivated />
         </Route>
         <Route path="/forgot-password">
           <ForgotPassword />
