@@ -6,7 +6,8 @@ function AuthContextProvider(props) {
   const [loggedIn, setLoggedIn] = useState(undefined);
 
   async function getLoggedIn() {
-    const url = "http://localhost:4000/users/loggedIn";
+    const url = "https://urlshortener-clone.herokuapp.com/users/loggedIn";
+    // const url = "http://localhost:4000/users/loggedIn";
 
     fetch(url, {
       method: "POST",
