@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import React from "react";
 
@@ -39,7 +40,7 @@ function Signup() {
     console.log(newUser);
 
     if (!isValidEmail(newUser.email)) {
-      errorMsg("Add correct email id");
+      toast.error("Add correct email id");
       return;
     }
 
@@ -58,11 +59,9 @@ function Signup() {
       .then((data) => {
         // console.log("Success:", data);
         if (data.msgType === "error") {
-          setErrorMsg(data.message);
-          setMsg("");
+          toast.error(data.message);
         } else if (data.msgType === "success") {
-          setErrorMsg("");
-          setMsg(data.message);
+          toast.success(data.message);
           history.push("/");
         }
       });
