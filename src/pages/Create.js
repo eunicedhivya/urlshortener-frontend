@@ -1,6 +1,10 @@
 // import } from "react";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../context/AuthContextProvider";
+import Cookies from "js-cookie";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCopy } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 
 function Create() {
   const { loggedIn } = useContext(AuthContext);
@@ -10,6 +14,7 @@ function Create() {
   const [msgType, setMsgType] = useState("");
   const [respMsg, setRespMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [copiedTxt, setCopiedTxt] = useState("");
   //   const [lastName, setLastName] = useState("");
   //   const [emailId, setEmailId] = useState("");
 
@@ -35,16 +40,15 @@ function Create() {
     var tmpArr = {};
 
     if (!isURL(longUrl)) {
-      setErrorMsg("Pls enter a valid URL");
+      toast.error("Pls enter a valid URL");
       return;
-    } else {
-      setErrorMsg("");
     }
 
     tmpArr["longUrl"] = longUrl;
+    tmpArr["token"] = Cookies.get("token");
     console.log(tmpArr);
 
-    // const url = "https://urlshortener-clone.herokuapp.com/users/signup";
+    // const url = "https://urlshortener-clone.herokuapp.com/users/create";
     const url = "http://localhost:4000/users/create";
     fetch(url, {
       method: "POST",
@@ -58,7 +62,8 @@ function Create() {
     })
       .then((data) => data.json())
       .then((data) => {
-        // console.log("Success:", data);
+        console.log("Success:", data);
+        toast.success(data.message);
         setShortUrl(data.shortUrl);
         setMsgType(data.msgType);
         setRespMsg(data.message);
@@ -89,10 +94,10 @@ function Create() {
   //     return () => {};
   //   }, []);
   return (
-    <div className="container ">
+    <div className="container text-center">
       <div className="col-md-6 offset-md-3">
         <div className="row justify-content-center">
-          <div className="card p-4 mt-5 bg-light">
+          <div className="card p-4 mt-5">
             <h2>Create Short URL</h2>
             <form>
               <div className="form-group mb-3">
@@ -109,23 +114,36 @@ function Create() {
 
               <button
                 type="submit"
-                className="btn btn-primary"
+                className="btn btn-primary mb-4"
                 onClick={(e) => onSubmit(e)}
               >
                 Submit
               </button>
             </form>
             {shortUrl ? (
-              <div
+              <button
                 className="alert alert-success"
+                id="copyShortLink"
                 onClick={(e) => {
-                  // navigator.clipboard.writeText(e.target.value);
-                  // console.log(e.target.innertext);
+                  // alert(e.targ et.value);
+                  navigator.clipboard.writeText(
+                    document.getElementById("copyShortLink").innerText
+                  );
+                  setCopiedTxt(
+                    document.getElementById("copyShortLink").innerText
+                  );
+                  toast.success("Copied");
+                  console.log(
+                    document.getElementById("copyShortLink").innerText
+                  );
                 }}
               >
                 {" "}
                 {shortUrl}
-              </div>
+                <span className="copyIcon">
+                  <FontAwesomeIcon icon={faCopy} />
+                </span>
+              </button>
             ) : (
               ""
             )}
