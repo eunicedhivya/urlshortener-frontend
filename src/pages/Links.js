@@ -1,6 +1,6 @@
-// import } from "react";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../context/AuthContextProvider";
+import Cookies from "js-cookie";
 
 function Links() {
   const { loggedIn } = useContext(AuthContext);
@@ -15,10 +15,19 @@ function Links() {
     // const loggedInRes = await fetch(url, { method: "GET" });
     // console.log(loggedInRes.body);
     // setLoggedIn(loggedInRes.data);
-    fetch(url, { method: "GET", credentials: "include" })
+    // fetch(url, { method: "GET", credentials: "include" })
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
+      },
+      body: JSON.stringify({ token: Cookies.get("token") }),
+    })
       .then((data) => data.json())
       .then((data) => {
-        // console.log("data", data);
+        console.log("data", data);
         // setFirstName(data.fname);
         // setLastName(data.lname);
         // setEmailId(data.email);
@@ -48,16 +57,22 @@ function Links() {
             </tr>
           </thead>
           <tbody>
-            {linklist.map(function (item) {
-              // console.log();
-              return (
-                <tr>
-                  <td>{item.longUrl}</td>
-                  <td>{item.shortUrl}</td>
-                  <td>{item.userid}</td>
-                </tr>
-              ); // return <p>item</p>;
-            })}
+            {linklist.length === 0 ? (
+              <tr>
+                <td colspan="3"> No URLs available </td>
+              </tr>
+            ) : (
+              linklist.map(function (item) {
+                // console.log();
+                return (
+                  <tr>
+                    <td>{item.longUrl}</td>
+                    <td>{item.shortUrl}</td>
+                    <td>{item.userid}</td>
+                  </tr>
+                ); // return <p>item</p>;
+              })
+            )}
           </tbody>
         </table>
       </div>
