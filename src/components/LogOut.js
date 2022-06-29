@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import AuthContext from "../context/AuthContextProvider";
+import { toast } from "react-toastify";
 
 function LogOut() {
   const { setLoggedIn } = useContext(AuthContext);
@@ -32,6 +33,7 @@ function LogOut() {
       .then((data) => {
         console.log("Success:", data);
         setLoggedIn(false);
+        toast.success(data.message);
         history.push("/");
       });
   }

@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { useHistory, Link } from "react-router-dom";
 import AuthContext from "../context/AuthContextProvider";
 import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 function Login() {
   const history = useHistory();
@@ -45,13 +46,15 @@ function Login() {
       .then((data) => {
         console.log("Success:", data.headers);
         if (data.msgType === "error") {
-          setErrorMsg(data.message);
-          setMsg("");
+          // setErrorMsg(data.message);
+          toast.error(data.message);
+          // setMsg("");
         } else if (data.msgType === "success") {
           console.log(data);
           if (data.message === "Login Successful") {
-            setErrorMsg("");
-            setMsg(data.message);
+            // setErrorMsg("");
+            // setMsg(data.message);
+            toast.success(data.message);
             setLoggedIn(true);
             Cookies.set("token", data.token);
             history.push("/dashboard");

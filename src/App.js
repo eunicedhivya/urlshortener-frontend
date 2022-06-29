@@ -11,11 +11,14 @@ import Links from "./pages/Links";
 import AuthContext from "./context/AuthContextProvider";
 import ForgotPassword from "./pages/ForgotPassword";
 import PasswordReset from "./pages/PasswordReset";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const { loggedIn } = useContext(AuthContext);
   return (
     <div className="App">
+      <ToastContainer autoClose={1000} />
       <Header />
       {/* <NavBar /> */}
       <Switch>
