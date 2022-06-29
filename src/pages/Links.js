@@ -59,13 +59,13 @@ function Links() {
           <tbody>
             {linklist.length === 0 ? (
               <tr>
-                <td colspan="3"> No URLs available </td>
+                <td colSpan="3"> No URLs available </td>
               </tr>
             ) : (
               linklist.map(function (item) {
                 // console.log();
                 return (
-                  <tr>
+                  <tr key={item._id}>
                     <td>{item.longUrl}</td>
                     <td>{item.shortUrl}</td>
                     <td>{item.userid}</td>
