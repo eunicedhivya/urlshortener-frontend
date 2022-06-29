@@ -1,14 +1,10 @@
 import { useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function ForgotPassword() {
-  const history = useHistory();
   const param = window.location.href.split("/");
   const userId = param[param.length - 2];
   const token = param[param.length - 1];
-
-  const [msg, setMsg] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
 
   const [newPassword, setNewPassword] = useState({
     password: "",
@@ -27,8 +23,8 @@ function ForgotPassword() {
     // tmpArr.push(newStudent);
     console.log(newPassword);
 
-    // const url = `https://urlshortener-clone.herokuapp.com/password-reset/${userId}/${token}`;
-    const url = `http://localhost:4000/password-reset/${userId}/${token}`;
+    const url = `https://urlshortener-clone.herokuapp.com/password-reset/${userId}/${token}`;
+    // const url = `http://localhost:4000/password-reset/${userId}/${token}`;
     console.log(url);
     fetch(url, {
       method: "POST",
@@ -44,11 +40,9 @@ function ForgotPassword() {
       .then((data) => {
         console.log("Success:", data);
         if (data.msgType === "error") {
-          setErrorMsg(data.message);
-          setMsg("");
+          toast.error(data.message);
         } else if (data.msgType === "success") {
-          setErrorMsg("");
-          setMsg(data.message);
+          toast.success(data.message);
         }
       });
   };
@@ -80,8 +74,6 @@ function ForgotPassword() {
                 Submit
               </button>
             </form>
-            {msg ? <p className="alert alert-success">{msg}</p> : ""}
-            {errorMsg ? <p className="alert alert-error">{errorMsg}</p> : ""}
           </div>
         </div>
       </div>

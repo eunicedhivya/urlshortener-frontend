@@ -48,8 +48,8 @@ function Create() {
     tmpArr["token"] = Cookies.get("token");
     console.log(tmpArr);
 
-    // const url = "https://urlshortener-clone.herokuapp.com/users/create";
-    const url = "http://localhost:4000/users/create";
+    const url = "https://urlshortener-clone.herokuapp.com/users/create";
+    // const url = "http://localhost:4000/users/create";
     fetch(url, {
       method: "POST",
       credentials: "include",
@@ -70,29 +70,6 @@ function Create() {
         // history.push("/");
       });
   };
-
-  //   async function getMeInfo() {
-  //     const url = "http://localhost:4000/users/me";
-  //     // const loggedInRes = await fetch(url, { method: "GET" });
-  //     // console.log(loggedInRes.body);
-  //     // setLoggedIn(loggedInRes.data);
-  //     fetch(url, { method: "GET", credentials: "include" })
-  //       .then((data) => data.json())
-  //       .then((data) => {
-  //         console.log("data", data);
-  //         setFirstName(data.fname);
-  //         setLastName(data.lname);
-  //         setEmailId(data.email);
-
-  //         // setLoggedIn(data);
-  //       });
-  //     // .then(() => history.push("/mentors"));
-  //   }
-
-  //   useEffect(() => {
-  //     getMeInfo();
-  //     return () => {};
-  //   }, []);
   return (
     <div className="container text-center">
       <div className="col-md-6 offset-md-3">

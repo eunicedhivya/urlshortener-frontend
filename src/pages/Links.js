@@ -11,7 +11,8 @@ function Links() {
   const [linklist, setlinklist] = useState([]);
 
   async function getMeLinks() {
-    const url = "http://localhost:4000/users/links";
+    const url = "https://urlshortener-clone.herokuapp.com/users/links";
+    // const url = "http://localhost:4000/users/links";
     // const loggedInRes = await fetch(url, { method: "GET" });
     // console.log(loggedInRes.body);
     // setLoggedIn(loggedInRes.data);

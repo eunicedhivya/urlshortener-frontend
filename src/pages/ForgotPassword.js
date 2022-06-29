@@ -1,12 +1,7 @@
 import { useState } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function ForgotPassword() {
-  const history = useHistory();
-
-  const [msg, setMsg] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
-
   const [newUser, setNewUser] = useState({
     email: "",
   });
@@ -24,8 +19,8 @@ function ForgotPassword() {
     // tmpArr.push(newStudent);
     console.log(newUser);
 
-    // const url = "https://urlshortener-clone.herokuapp.com/password-reset/";
-    const url = "http://localhost:4000/password-reset/";
+    const url = "https://urlshortener-clone.herokuapp.com/password-reset/";
+    // const url = "http://localhost:4000/password-reset/";
     fetch(url, {
       method: "POST",
       credentials: "include",
@@ -41,28 +36,10 @@ function ForgotPassword() {
         console.log("Success:", data);
 
         if (data.msgType === "error") {
-          setErrorMsg(data.message);
-          setMsg("");
+          toast.error(data.message);
         } else if (data.msgType === "success") {
-          setErrorMsg("");
-          setMsg(data.message);
+          toast.success(data.message);
         }
-
-        // if (data.message === "Invalid URL") {
-        //   setErrorMsg(data.message);
-        //   setMsg("");
-        // } else if (data.message === "Valid URL") {
-        //   history.push("/password-reset");
-        // }
-
-        // if (data.message === "Account not activated yet") {
-        //   setMsg(data.message);
-        // } else if (data.message === "Internal Server Error") {
-        //   setMsg(data.message);
-        // } else {
-        //   history.push("/dashboard");
-        // }
-        // history.push("/students");
       });
   };
 
@@ -93,8 +70,6 @@ function ForgotPassword() {
                 Submit
               </button>
             </form>
-            {msg ? <p className="alert alert-success">{msg}</p> : ""}
-            {errorMsg ? <p className="alert alert-danger">{errorMsg}</p> : ""}
           </div>
         </div>
       </div>

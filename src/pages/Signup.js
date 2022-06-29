@@ -7,9 +7,6 @@ import React from "react";
 function Signup() {
   const history = useHistory();
 
-  const [msg, setMsg] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
-
   const [newUser, setNewUser] = useState({
     fname: "",
     lname: "",
@@ -44,8 +41,8 @@ function Signup() {
       return;
     }
 
-    // const url = "https://urlshortener-clone.herokuapp.com/users/signup";
-    const url = "http://localhost:4000/users/signup";
+    const url = "https://urlshortener-clone.herokuapp.com/users/signup";
+    // const url = "http://localhost:4000/users/signup";
     fetch(url, {
       method: "POST",
       headers: {
@@ -127,8 +124,6 @@ function Signup() {
                 Submit
               </button>
             </form>
-            {msg ? <p className="alert alert-success">{msg}</p> : ""}
-            {errorMsg ? <p className="alert alert-danger">{errorMsg}</p> : ""}
           </div>
         </div>
       </div>

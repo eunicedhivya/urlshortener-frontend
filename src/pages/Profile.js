@@ -18,8 +18,8 @@ function Profile() {
   }, []);
 
   async function getMeInfo() {
-    // const url = "https://urlshortener-clone.herokuapp.com/users/me";
-    const url = "http://localhost:4000/users/me";
+    const url = "https://urlshortener-clone.herokuapp.com/users/me";
+    // const url = "http://localhost:4000/users/me";
 
     fetch(url, {
       method: "POST",
@@ -64,15 +64,7 @@ function Profile() {
     return itm.count;
   });
 
-  // console.log("dataLabels", dataLabels);
-  // console.log("dataPoints", dataPoints);
   return (
-    // <div>
-    //   <h2>Profile Page</h2>
-    //   <p>{firstName}</p>
-    //   <p>{lastName}</p>
-    //   <p>{emailId}</p>
-    // </div>
     <div className="container">
       <main>
         <div className="row g-5">
