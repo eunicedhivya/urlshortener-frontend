@@ -68,8 +68,19 @@ function Links() {
                 return (
                   <tr key={item._id}>
                     <td>{item.longUrl}</td>
-                    <td>{item.shortUrl}</td>
-                    <td>{item.userid}</td>
+                    <td>
+                      <a
+                        href={
+                          "https://urlshortener-clone.herokuapp.com/" +
+                          item.shortUrl
+                        }
+                        target="_blank"
+                      >
+                        {"https://urlshortener-clone.herokuapp.com/" +
+                          item.shortUrl}
+                      </a>
+                    </td>
+                    <td>{item.clicks}</td>
                   </tr>
                 ); // return <p>item</p>;
               })

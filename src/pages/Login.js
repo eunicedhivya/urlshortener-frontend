@@ -9,8 +9,8 @@ function Login() {
 
   const { loggedIn, setLoggedIn } = useContext(AuthContext);
 
-  const [msg, setMsg] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
+  // const [msg, setMsg] = useState("");
+  // const [errorMsg, setErrorMsg] = useState("");
 
   const [newUser, setNewUser] = useState({
     email: "",
@@ -77,7 +77,7 @@ function Login() {
       });
   };
 
-  console.log("test", msg);
+  // console.log("test", msg);
   return (
     <div className="container ">
       <div className="col-md-6 offset-md-3">
@@ -115,11 +115,9 @@ function Login() {
               >
                 Submit
               </button>
-
+              <br />
               <Link to="/forgot-password">forgot password</Link>
             </form>
-            {msg ? <p>{msg}</p> : ""}
-            {errorMsg ? <p>{errorMsg}</p> : ""}
           </div>
         </div>
       </div>

@@ -19,33 +19,46 @@ function App() {
   const { loggedIn } = useContext(AuthContext);
   return (
     <div className="App">
-      <ToastContainer autoClose={1000} />
+      <ToastContainer autoClose={4000} />
       <Header />
       {/* <NavBar /> */}
       <Switch>
-        <Route path="/" exact>
-          <Login />
-        </Route>
-        <Route path="/signup">
-          <Signup />
-        </Route>
-        <Route path="/dashboard">
-          <Profile />
-        </Route>
-        <Route path="/links">
-          <Links />
-        </Route>
-        <Route path="/create">
-          <Create />
-        </Route>
-        <Route path="/account-activated">
-          <AccActivated />
-        </Route>
-        <Route path="/forgot-password">
-          <ForgotPassword />
-        </Route>
-        <Route path="/password-reset">
-          <PasswordReset />
+        {!loggedIn ? (
+          <>
+            <Route path="/" exact>
+              <Login />
+            </Route>
+            <Route path="/signup">
+              <Signup />
+            </Route>
+            <Route path="/forgot-password">
+              <ForgotPassword />
+            </Route>
+            <Route path="/password-reset">
+              <PasswordReset />
+            </Route>
+          </>
+        ) : (
+          <>
+            <Route path="/" exact>
+              <Redirect to="/dashboard" />
+            </Route>
+            <Route path="/dashboard">
+              <Profile />
+            </Route>
+            <Route path="/links">
+              <Links />
+            </Route>
+            <Route path="/create">
+              <Create />
+            </Route>
+            <Route path="/account-activated">
+              <AccActivated />
+            </Route>
+          </>
+        )}
+        <Route path="**">
+          <div>Not Found</div>
         </Route>
       </Switch>
     </div>

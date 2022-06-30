@@ -29,6 +29,7 @@ const options = {
       top: 25,
       bottom: 0,
     },
+    height: 500,
   },
 
   legend: {
@@ -55,14 +56,14 @@ const options = {
   },
 };
 
-function BarChart({ datapoints, datalabel }) {
+function BarChart({ charttitle, datapoints, datalabel }) {
   console.log("dataLabels", datapoints);
   console.log("dataPoints", datalabel);
   const data = {
     labels: datalabel,
     datasets: [
       {
-        label: "Revenue",
+        label: charttitle,
         backgroundColor: "#4e73df",
         hoverBackgroundColor: "#2e59d9",
         borderColor: "#4e73df",

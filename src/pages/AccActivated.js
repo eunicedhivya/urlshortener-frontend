@@ -6,7 +6,7 @@ function AccActivated() {
       <h1 className="text-primary">Account has been activated.</h1>
       <p>
         Please{" "}
-        <a className="text-primary" href="/login">
+        <a className="text-primary" href="/">
           click here
         </a>{" "}
         to login

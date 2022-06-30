@@ -104,7 +104,11 @@ function Profile() {
                     <a href="/create">Click here</a> to create a shortlink
                   </div>
                 ) : (
-                  <BarChart datapoints={dataPoints} datalabel={dataLabels} />
+                  <BarChart
+                    charttitle="No of shorturls"
+                    datapoints={dataPoints}
+                    datalabel={dataLabels}
+                  />
                 )}
               </div>
             </div>

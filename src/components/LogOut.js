@@ -38,7 +38,11 @@ function LogOut() {
       });
   }
 
-  return <button onClick={logOut}>Log out</button>;
+  return (
+    <button className="btn btn-outline-primary" onClick={logOut}>
+      Log out
+    </button>
+  );
 }
 
 export default LogOut;
